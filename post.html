@@ -21,6 +21,16 @@
     <!-- Custom styles for this template -->
     <link href="css/clean-blog.min.css" rel="stylesheet">
 
+    <link href='http://alexgorbatchev.com/pub/sh/current/styles/shCore.css' rel='stylesheet' type='text/css'/>
+    <link href='http://alexgorbatchev.com/pub/sh/current/styles/shThemeDefault.css' rel='stylesheet' type='text/css'/>
+    <script src='http://alexgorbatchev.com/pub/sh/current/scripts/shCore.js' type='text/javascript'></script>
+    <script src='http://alexgorbatchev.com/pub/sh/current/scripts/shBrushPhp.js' type='text/javascript'></script>
+    <script language='javascript'>
+        SyntaxHighlighter.config.bloggerMode = true;
+        SyntaxHighlighter.config.clipboardSwf = 'http://alexgorbatchev.com/pub/sh/current/scripts/clipboard.swf';
+        SyntaxHighlighter.all();
+    </script>
+
   </head>
 
   <body>
@@ -58,11 +68,11 @@
         <div class="row">
           <div class="col-lg-8 col-md-10 mx-auto">
             <div class="post-heading">
-              <h1>Man must explore, and this is exploration at its greatest</h1>
-              <h2 class="subheading">Problems look mighty small from 150 miles up</h2>
-              <span class="meta">Posted by
-                <a href="#">Start Bootstrap</a>
-                on August 24, 2017</span>
+              <h1>Php 7 ile gelen, geriye dönük uyumsuz değişiklikler </h1>
+              <h2 class="subheading">Hatalar ve istisna yönetiminde değişiklikler</h2>
+              <span class="meta">
+                <a href="index.html">muratcan itap</a>
+                Eylül 04, 2017</span>
             </div>
           </div>
         </div>
@@ -74,42 +84,47 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-8 col-md-10 mx-auto">
-            <p>Never in all their history have men been able truly to conceive of the world as one: a single sphere, a globe, having the qualities of a globe, a round earth in which all the directions eventually meet, in which there is no center because every point, or none, is center — an equal earth which all men occupy as equals. The airman's earth, if free men make it, will be truly round: a globe in practice, not in theory.</p>
+            <p>
+              Eski php versiyonlarında bulunan ölümcül hataların çoğu Php7'de istisnalara dönüştürüldü.
+              Bu istisnalar Php'nin çekirdek <a href="#">Hata</a> sınıfından türemektedir ve
+              bu sınıf <a href="#">throwable</a> arayüzünü implemente etmektedir.
+            </p>
 
-            <p>Science cuts two ways, of course; its products can be used for both good and evil. But there's no turning back from science. The early warnings about technological dangers also come from science.</p>
+            <p>
+              Yukarıdaki sebepten dolayı, kendi yazdığımız ve hataları kontrol edip yönettiğimiz kodlar çalışmayabilir
+              çünkü hatalar yerine istisnalar atılıyor olabiir.
+            </p>
 
-            <p>What was most significant about the lunar voyage was not that man set foot on the Moon but that they set eye on the earth.</p>
+            <p>
+              Php7'de hatalarla ilgili resmi dökümantasyona <a href="#">buradan</a> ulaşabilirsiniz.
+            </p>
 
-            <p>A Chinese tale tells of some men sent to harm a young girl who, upon seeing her beauty, become her protectors rather than her violators. That's how I felt seeing the Earth for the first time. I could not help but love and cherish her.</p>
+            <h2 class="section-heading">set_exception_handler() ile kayıt edilen fonksiyonlar</h2>
 
-            <p>For those who have seen the Earth from space, and for the hundreds and perhaps thousands more who will, the experience most certainly changes your perspective. The things that we share in our world are far more valuable than those which divide us.</p>
+            <p>
+              Eğer hatayı yakaladığımız fonksiyonu set_exception_handler() ile kayıt ediyorsak,
+              Exception tip tanımlamasını kullanmamalıyız.
+            </p>
 
-            <h2 class="section-heading">The Final Frontier</h2>
+            <p>
+              Fonksiyonun php5 ve php7'de çalışmasını istiyorsak Exception tip tanımlamasını fonksiyondan kaldırmalıyız.
+              Eğer fonksiyon sadece php7'de çalışacaksa Exception tip tanımlaması yerine Throwable tanımlamasını kullanmalıyız.
+            </p>
 
-            <p>There can be no thought of finishing for ‘aiming for the stars.’ Both figuratively and literally, it is a task to occupy the generations. And no matter how much progress one makes, there is always the thrill of just beginning.</p>
+            <pre class="brush: php">
+                // Çalışmayacak olan php5 kodu
+                function handler(Exception $e) { ... }
+                set_exception_handler('handler');
 
-            <p>There can be no thought of finishing for ‘aiming for the stars.’ Both figuratively and literally, it is a task to occupy the generations. And no matter how much progress one makes, there is always the thrill of just beginning.</p>
+                // PHP 5 ve 7 için çalışır kod.
+                function handler($e) { ... }
 
-            <blockquote class="blockquote">The dreams of yesterday are the hopes of today and the reality of tomorrow. Science has not yet mastered prophecy. We predict too much for the next year and yet far too little for the next ten.</blockquote>
+                // Sadece php7 için çalışacak olan kod.
+                function handler(Throwable $e) { ... }
+            </pre>
 
-            <p>Spaceflights cannot be stopped. This is not the work of any one man or even a group of men. It is a historical process which mankind is carrying out in accordance with the natural laws of human development.</p>
-
-            <h2 class="section-heading">Reaching for the Stars</h2>
-
-            <p>As we got further and further away, it [the Earth] diminished in size. Finally it shrank to the size of a marble, the most beautiful you can imagine. That beautiful, warm, living object looked so fragile, so delicate, that if you touched it with a finger it would crumble and fall apart. Seeing this has to change a man.</p>
-
-            <a href="#">
-              <img class="img-fluid" src="img/post-sample-image.jpg" alt="">
-            </a>
-            <span class="caption text-muted">To go places and do things that have never been done before – that’s what living is all about.</span>
-
-            <p>Space, the final frontier. These are the voyages of the Starship Enterprise. Its five-year mission: to explore strange new worlds, to seek out new life and new civilizations, to boldly go where no man has gone before.</p>
-
-            <p>As I stand out here in the wonders of the unknown at Hadley, I sort of realize there’s a fundamental truth to our nature, Man must explore, and this is exploration at its greatest.</p>
-
-            <p>Placeholder text by
-              <a href="http://spaceipsum.com/">Space Ipsum</a>. Photographs by
-              <a href="https://www.flickr.com/photos/nasacommons/">NASA on The Commons</a>.</p>
+            <p>Kaynak
+              <a href="http://php.net/manual/en/migration70.incompatible.php">Resmi Php7 Dökümantasyonu</a>
           </div>
         </div>
       </div>
@@ -124,7 +139,7 @@
           <div class="col-lg-8 col-md-10 mx-auto">
             <ul class="list-inline text-center">
               <li class="list-inline-item">
-                <a href="#">
+                <a href="https://twitter.com/mitap13" target="_blank">
                   <span class="fa-stack fa-lg">
                     <i class="fa fa-circle fa-stack-2x"></i>
                     <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
@@ -132,7 +147,7 @@
                 </a>
               </li>
               <li class="list-inline-item">
-                <a href="#">
+                <a href="https://www.facebook.com/mitap13" target="_blank">
                   <span class="fa-stack fa-lg">
                     <i class="fa fa-circle fa-stack-2x"></i>
                     <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
@@ -140,7 +155,7 @@
                 </a>
               </li>
               <li class="list-inline-item">
-                <a href="#">
+                <a href="https://github.com/mitap45" target="_blank">
                   <span class="fa-stack fa-lg">
                     <i class="fa fa-circle fa-stack-2x"></i>
                     <i class="fa fa-github fa-stack-1x fa-inverse"></i>
@@ -148,7 +163,7 @@
                 </a>
               </li>
             </ul>
-            <p class="copyright text-muted">Copyright &copy; Your Website 2017</p>
+            <p class="copyright text-muted">Copyright &copy; mitap45.github.com 2017</p>
           </div>
         </div>
       </div>
